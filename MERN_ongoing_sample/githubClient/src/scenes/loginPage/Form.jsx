@@ -15,6 +15,8 @@ import { setLogin, setLikes } from "state";
 import Dropzone from "react-dropzone";
 import Flex from "components/Flex";
 import { purple, orange, red, grey } from "@mui/material/colors"
+import { setIngredients, setCategories, setRecipes} from "state";
+
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
@@ -28,6 +30,7 @@ const loginSchema = yup.object().shape({
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
 });
+
 
 const initialValuesRegister = {
   firstName: "",
@@ -43,12 +46,29 @@ const initialValuesLogin = {
 };
 
 const Form = () => {
-  const [pageType, setPageType] = useState("login");
   const dispatch = useDispatch();
+  const [pageType, setPageType] = useState("login");
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
+
+
+  const getAllIngredients = async () => {
+    const response = await fetch(`http://localhost:3001/recipes/getAllIngredients`, {
+      method: "GET",
+    });
+    const data = await response.json();
+    dispatch(setIngredients({ingredients: data}));
+  };
+  
+  const getAllCategories = async() => {
+    const response = await fetch(`http://localhost:3001/category/`,{
+      method: 'GET'
+    });
+    const data = await response.json();
+    dispatch(setCategories({categories : data}));
+  }; 
 
   const register = async (values, onSubmitProps) => {
     // this allows us to send form info with image
@@ -72,6 +92,13 @@ const Form = () => {
       setPageType("login");
     }
   };
+  const getAllRecipes = async () => {
+    const response = await fetch("http://localhost:3001/recipes/", {
+      method: "GET",
+    });
+    const data = await response.json();
+    dispatch(setRecipes({ recipes: data }));
+  };
 
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
@@ -82,6 +109,9 @@ const Form = () => {
     const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
     if (loggedIn) {
+      await getAllCategories();
+      await getAllIngredients();
+      await getAllRecipes();
       dispatch(
         setLogin({
           user: loggedIn.user,
