@@ -1,0 +1,83 @@
+/* Add your tooltip styles here */
+
+.tooltip-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .tooltip-top {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    z-index: 1000;
+    background-color: #fff;
+    color: #000;
+    border-radius: 4px;
+    padding: 8px;
+    height: 100%;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    box-shadow: 0 2px 15px rgba(206, 206, 206,1);
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .tooltip-bottom {
+    position: absolute;
+    top: calc(100% + 12px);
+    height: 100%;
+    z-index: 1000;
+    background-color: #fff;
+    color: #000;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 12px;
+    white-space: nowrap;
+    box-shadow: 0 2px 15px rgba(206, 206, 206,1);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .tooltip-left {
+    left:50%;
+  }
+
+  .tooltip-right {
+    right: 50%;
+  }
+  
+  .arrow-top {
+    top: 100%;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 12px solid transparent;
+    border-top-color: #fff;
+  }
+
+  .arrow-bottom {
+    bottom: 100% ;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 12px solid transparent;
+    border-bottom-color: #fff;
+  }
+  
+  .arrowSide-top {
+    left: 50%;
+  }
+  
+  .arrowSide-bottom {
+    right: 50%;
+  }
+  
+  .arrowSide-left {
+    right: 80%;
+  }
+  
+  .arrowSide-right {
+    left: 80%;
+  }
+  
